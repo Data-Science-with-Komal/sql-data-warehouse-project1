@@ -1,2 +1,8 @@
-# sql-data-warehouse-project1
-Building modern warehouse with sql server.Includig ETL process,Data Modeling and data analytics
+#Data warehouse  and analytics project
+
+
+Welcome to the "Data warehouse and analytics projects" repository
+This project Demonstarte and Comprehansive Data warehousing and data analytics solutions,from building a data warehouse to generating actionable insights.Designed as a portfolio projects highlights industry best practice in data engineering and data analytics.
+
+.........
+

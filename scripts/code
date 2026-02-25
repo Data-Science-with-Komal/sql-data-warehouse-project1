@@ -1,0 +1,85 @@
+/*
+================================================================================
+DATA WAREHOUSE CREATION SCRIPT
+================================================================================
+Purpose: Create database with the name 'warehouse database' 
+         and also create schemas with the names 'bronze', 'silver', 'gold'
+
+⚠️  WARNING: 
+    Do not use DROP command hence you not delete any schema or database
+
+================================================================================
+SCRIPT EXECUTION ORDER
+================================================================================
+*/
+
+-- ============================================================================
+-- STEP 1: USE MASTER DATABASE
+-- ============================================================================
+USE Master;
+GO
+
+-- ============================================================================
+-- STEP 2: CREATE DATABASE 'warehouse database'
+-- ============================================================================
+-- ℹ️  CHECK: This creates the main data warehouse database
+CREATE DATABASE [warehouse database];
+GO
+
+-- ============================================================================
+-- STEP 3: USE WAREHOUSE DATABASE
+-- ============================================================================
+USE [warehouse database];
+GO
+
+-- ============================================================================
+-- NEXT: CREATE SCHEMAS (Bronze, Silver, Gold)
+-- ============================================================================
+-- 📌 IMPORTANT: Each CREATE SCHEMA must be followed by GO to separate batches
+-- This is the Medallion Architecture pattern for data warehouses
+
+-- ⭐ CREATE BRONZE SCHEMA
+-- Bronze layer: Raw data from source systems (as-is, no transformation)
+DROP SCHEMA IF EXISTS bronze;
+GO
+
+CREATE SCHEMA bronze;
+GO
+
+-- ⭐ CREATE SILVER SCHEMA
+-- Silver layer: Cleaned and standardized data (transformed, deduplicated)
+DROP SCHEMA IF EXISTS silver;
+GO
+
+CREATE SCHEMA silver;
+GO
+
+-- ⭐ CREATE GOLD SCHEMA
+-- Gold layer: Business-ready data (aggregated, optimized for reporting)
+DROP SCHEMA IF EXISTS gold;
+GO
+
+CREATE SCHEMA gold;
+GO
+
+-- ============================================================================
+-- ✅ VERIFICATION: Check if schemas were created successfully
+-- ============================================================================
+-- Run this query to verify all schemas exist:
+SELECT 
+    SCHEMA_NAME(schema_id) AS SchemaName,
+    SCHEMA_ID(name) AS SchemaID,
+    SCHEMA_OWNER(name) AS OwnerName
+FROM sys.schemas
+WHERE name IN ('bronze', 'silver', 'gold')
+ORDER BY SCHEMA_NAME(schema_id);
+GO
+
+-- ============================================================================
+-- 📋 SCRIPT SUMMARY
+-- ============================================================================
+-- ✓ Database Created: warehouse database
+-- ✓ Schema Created: bronze (Raw layer)
+-- ✓ Schema Created: silver (Cleaned layer)
+-- ✓ Schema Created: gold (Business layer)
+-- ============================================================================
